@@ -25,10 +25,16 @@ def convert_df():
     main_df['CHANGE'] = pd.to_numeric(main_df['CHANGE'])
 
     # trim the reason column whitespace
-    main_df['REASON'] = main_df['REASON'].str.strip()
+    try: 
+        main_df['REASON'] = main_df['REASON'].str.strip()
+    except KeyError:
+        pass
     
-    # some REASON values are NaN, replace with something
-    main_df['REASON'] = main_df['REASON'].fillna('-')
+    # some REASON values are NaN, replace with empty spaces
+    try:
+        main_df['REASON'] = main_df['REASON'].replace('', ' ')
+    except KeyError:
+        pass
 
 # intialize the conversion
 convert_df()
